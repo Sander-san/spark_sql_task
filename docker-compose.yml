@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - 5432:5432
+    volumes:
+      - ./pagila-schema.sql:/docker-entrypoint-initdb.d/pagila-schema.sql
+      - ./pagila-data.sql:/docker-entrypoint-initdb.d/pagila-data.sql
+#      - ./init.sh:/bin/init.sh
+
+  app:
+    build: .
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+

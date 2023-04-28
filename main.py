@@ -55,7 +55,7 @@ df1 = category_df.join(film_category_df, 'category_id')
 df1 = df1.groupBy('name') \
     .agg(count('film_id').alias('film_quantity')) \
     .orderBy(col('film_quantity').desc())
-# df1.show()
+df1.show()
 
 
 '''Task 2'''
@@ -144,3 +144,4 @@ res_b = df7.filter("title like 'A%'").groupBy('name')\
 
 res = res_b.union(res_b)
 # res.select('name').show(1)
+
